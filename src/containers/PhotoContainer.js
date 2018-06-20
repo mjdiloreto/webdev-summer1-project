@@ -1,12 +1,16 @@
 import React from 'react';
 import YelpService from '../services/YelpService';
 import sleep from '../util';
+import Photo from "../components/Photo";
+import Paginator from "../components/Paginator";
 
 export default class PhotoContainer extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      photos: []
+      photos: [],
+      page: 0
     }
   }
 
@@ -26,16 +30,28 @@ export default class PhotoContainer extends React.Component {
     )
   }
 
+  pageOne() {
+    console.log("page one");
+  }
+
+  pageTwo() {
+    console.log("page two");
+  }
+
   render() {
     return (
-      <div>
-        <ul>
-          {this.state.photos.map((photoUrl, index) =>
-            <li key={index}>
-              <img src={photoUrl} alt={photoUrl}/>
-            </li>
-          )}
-        </ul>
+      <div className="container-fluid">
+
+        <Paginator page_turners={[this.pageOne.bind(this), this.pageTwo.bind(this)]}/>
+
+        {/*<ul>*/}
+          {/*{this.state.photos.map((photoUrl, index) =>*/}
+            {/*(photoUrl != "" + {} && // The api responds with this if the queries are too fast.*/}
+              {/*<li key={index} style={{display: "inline-block"}}>*/}
+                {/*<Photo src={photoUrl} alt={photoUrl}/>*/}
+              {/*</li>)*/}
+          {/*)}*/}
+        {/*</ul>*/}
       </div>
     )
   }
