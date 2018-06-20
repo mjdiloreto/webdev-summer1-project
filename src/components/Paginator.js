@@ -4,6 +4,8 @@ export default class Paginator extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log("page turners are")
+    console.log(props.page_turners)
     this.state = {
       page_turners: props.page_turners,
       active_page: 0
@@ -28,7 +30,7 @@ export default class Paginator extends React.Component {
   render() {
     return (
       <nav>
-        <ul className="pagination pg-purple">
+        <ul className="pagination">
           <li className="page-item">
             <a className="page-link" aria-label="Previous"
                onClick={this.changePage(this.state.active_page - 1)}>
