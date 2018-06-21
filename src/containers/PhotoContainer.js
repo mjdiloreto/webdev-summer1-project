@@ -86,13 +86,10 @@ export default class PhotoContainer extends React.Component {
 
     // How many pages will there be?
     let num_turners = Math.ceil(this.state.businesses.length / this.state.pageLength);
-    console.log("num turn")
-    console.log(num_turners)
 
     let turners = [];
     for (let i = 0; i < num_turners; i++) {
       turners.push(() => {
-        console.log("running");
         this.page(this.state.pageLength, i)
       });
     }

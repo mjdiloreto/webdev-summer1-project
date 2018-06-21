@@ -4,8 +4,6 @@ export default class Paginator extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log("page turners are")
-    console.log(props.page_turners)
     this.state = {
       page_turners: props.page_turners,
       active_page: 0

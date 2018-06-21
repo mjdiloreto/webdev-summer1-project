@@ -25,6 +25,8 @@ export default class Home extends React.Component {
                  component={Login}/>
           <Route exact path="/register"
                  component={Register}/>
+          <Route exact path="/profile"
+                 component={TitleBar}/>
         </div>
       </Router>
     );

@@ -13,7 +13,7 @@ export default class SearchBar extends React.Component {
 
   render() {
     if(this.state.search) {
-      this.state.search = false;
+      this.setState({search: false});
       return <Redirect to={'/search' + "?term=" + this.state.term + "&location=" + this.state.location}/>
     }
 
