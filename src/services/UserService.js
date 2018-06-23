@@ -18,6 +18,18 @@ export default class UserService {
     return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user", {
       method: "POST",
       body: JSON.stringify(user),
+      // credentials: "include",
+      headers: {
+        "content-type": "application/json"
+      }
+    }).then(response => response.json());
+  }
+
+  login(user) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/login", {
+      method: "POST",
+      // credentials: "include",
+      body: JSON.stringify(user),
       headers: {
         "content-type": "application/json"
       }
