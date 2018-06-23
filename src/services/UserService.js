@@ -43,6 +43,17 @@ export default class UserService {
     }).then(response => response.json());
   }
 
+  update(user) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user/" + user.id, {
+      method: "PUT",
+      body: JSON.stringify(user),
+      credentials: "include",
+      headers: {
+        "content-type": "application/json"
+      }
+    }).then(response => response.json());
+  }
+
   findUserByUsername(username) {
     return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user?username=" + username)
       .then(response => response.json())
