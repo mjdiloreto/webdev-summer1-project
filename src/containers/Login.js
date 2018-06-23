@@ -20,6 +20,7 @@ export default class Login extends React.Component {
           alert("There is no user with that username and password.");
         } else {
           this.setState({loggedIn: true});
+          this.props.userChanged(users[0]);
         }
       })
   }

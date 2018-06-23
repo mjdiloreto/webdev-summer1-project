@@ -32,7 +32,10 @@ export default class Register extends React.Component {
           alert("That username is taken.")
         } else {
           UserService.instance.register(user)
-            .then(() => this.setState({registered: true}))
+            .then(() => {
+              this.setState({registered: true});
+              this.props.userChanged(user);
+            })
             .catch(response => alert(response));
         }
       });

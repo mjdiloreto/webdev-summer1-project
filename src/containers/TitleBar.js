@@ -13,13 +13,14 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 import SearchBar from "../components/SearchBar";
+import UserService from "../services/UserService";
 
 
 export default class TitleBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
   }
 
@@ -28,6 +29,7 @@ export default class TitleBar extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -43,6 +45,10 @@ export default class TitleBar extends React.Component {
               <NavItem>
                 <NavLink href="/register">Register</NavLink>
               </NavItem>
+              {this.props.currentUser.username &&
+              <NavItem>
+                <NavLink href="/logout">Logout</NavLink>
+              </NavItem>}
             </Nav>
           </Collapse>
         </Navbar>
