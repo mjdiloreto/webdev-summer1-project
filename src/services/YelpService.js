@@ -27,4 +27,9 @@ export default class YelpService {
 
     return fetch(url).then(response => response.json());
   }
+
+  searchBusinessById(id) {
+    return fetch(YELPERHELPER_NODE_ADDRESS + '/api/business/' + id)
+      .then(response => response.json());
+  }
 }

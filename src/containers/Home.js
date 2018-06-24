@@ -5,6 +5,7 @@ import TitleBar from "./TitleBar";
 import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
+import Business from "./Business";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -32,6 +33,8 @@ export default class Home extends React.Component {
                  render={routeProps => <Register {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
           <Route exact path="/profile"
                  component={Profile}/>
+          <Route path="/business/:businessId"
+                 component={Business}/>
         </div>
       </Router>
     );

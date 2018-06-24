@@ -1,6 +1,6 @@
 import React from 'react';
 import YelpService from '../services/YelpService';
-import sleep from '../util';
+import { Link } from "react-router-dom";
 import Photo from "../components/Photo";
 import Paginator from "../components/Paginator";
 import queryString from 'query-string';
@@ -24,26 +24,10 @@ export default class PhotoContainer extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setSearchedBusinesses(this.state.term, this.state.location)
       .then(() => this.generatePageTurners())
       .then(() => this.pageOne());
-  }
-
-  oldMount() {
-    YelpService.instance.searchBusinesses("Coffee", "Boston, Ma")
-      .then(businesses =>
-        businesses.map(business => {
-            YelpService.instance.searchPhotosForBusiness(business.id)
-              .then(photos => {
-                  this.setState({photos: this.state.photos.concat(photos)})
-                }
-              );
-
-            sleep(200); // Wait 200ms to prevent 423 error from yelp.
-          }
-        )
-      )
   }
 
   setSearchedBusinesses(query, location) {
@@ -60,7 +44,7 @@ export default class PhotoContainer extends React.Component {
     this.setState({photos: []});
   }
 
-  page(page_size, page_number) {
+  page = async (page_size, page_number) => {
     this.wipePhotos();
 
     for (let i = page_size * page_number; i < page_size * page_number + page_size; i++) {
@@ -69,21 +53,15 @@ export default class PhotoContainer extends React.Component {
       }
 
       let business = this.state.businesses[i];
-      this.setPhotos(business);
-      sleep(200);
+      await this.setPhotos(business);
     }
-  }
+  };
 
   pageOne() {
     this.page(this.state.pageLength, 0);
   }
 
-  pageTwo() {
-    this.page(this.state.pageLength, 1);
-  }
-
   generatePageTurners() {
-
     // How many pages will there be?
     let num_turners = Math.ceil(this.state.businesses.length / this.state.pageLength);
 
@@ -104,10 +82,12 @@ export default class PhotoContainer extends React.Component {
         {this.state.businesses.length !== 0 && <Paginator page_turners={this.generatePageTurners()}/>}
 
         <ul>
-          {this.state.photos.map((photoUrl, index) =>
-            (photoUrl != "" + {} && // The api responds with this if the queries are too fast.
+          {this.state.photos.map(({src, businessId}, index) =>
+            (src !== "" + {} && // The api responds with this if the queries are too fast.
               <li key={index} style={{display: "inline-block"}}>
-                <Photo src={photoUrl} alt={photoUrl}/>
+                <Link to={"/business/" + businessId}>
+                  <Photo src={src} businessId={businessId} alt={src}/>
+                </Link>
               </li>)
           )}
         </ul>
