@@ -15,7 +15,7 @@ export default class UserService {
   }
 
   register(user) {
-    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user", {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/register", {
       method: "POST",
       body: JSON.stringify(user),
       credentials: "include",
