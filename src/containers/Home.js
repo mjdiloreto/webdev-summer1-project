@@ -7,6 +7,7 @@ import Register from "./Register";
 import Profile from "./Profile";
 import Business from "./Business";
 import Admin from "./Admin";
+import Review from "./Review";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -34,8 +35,10 @@ export default class Home extends React.Component {
                  render={routeProps => <Register {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
           <Route exact path="/profile"
                  render={routeProps => <Profile {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
-          <Route path="/business/:businessId"
+          <Route exact path="/business/:businessId"
                  render={routeProps => <Business {...routeProps} currentUser={this.state.currentUser}/>}/>
+          <Route exact path="/business/:businessId/review"
+                 render={routeProps => <Review {...routeProps} currentUser={this.state.currentUser}/>}/>
           <Route path="/admin"
                  render={routeProps => <Admin {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
         </div>

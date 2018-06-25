@@ -2,13 +2,15 @@ import React from 'react'
 import YelpService from "../services/YelpService";
 import BusinessService from "../services/BusinessService";
 import PhotoCard from "../components/PhotoCard";
+import Redirect from "react-router-dom/es/Redirect";
 
 export default class Business extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       businessId: this.props.match.params.businessId,
-      business: {}
+      business: {},
+      redirectToReview: false,
     };
   }
 
@@ -25,9 +27,17 @@ export default class Business extends React.Component {
     BusinessService.instance.dislikeBusiness(this.state.business)
   }
 
+  redirectToReview() {
+    this.setState({redirectToReview: true});
+  }
+
   render() {
     if(!this.state.business.name) {
       return <div></div>;
+    }
+
+    if(this.state.redirectToReview) {
+      return <Redirect to={"/business/" + this.state.businessId + "/review"}/>
     }
 
     return (
@@ -41,7 +51,7 @@ export default class Business extends React.Component {
             <p className="lead text-muted"><a href={this.state.business.url}>Visit their Yelp page</a></p>
             {/*<Photo src={this.state.business.image_url} alt={this.state.business.image_url}/>*/}
             <p>
-              <button className="btn btn-secondary my-2">Write a review</button>
+              <button className="btn btn-secondary my-2" onClick={() => this.redirectToReview()}>Write a review</button>
               {/*<button onClick={() => this.like()} className="btn btn-outline-success my-2">*/}
                 {/*<i className="fa fa-thumbs-up"/>*/}
               {/*</button>*/}

@@ -66,4 +66,24 @@ export default class BusinessService {
       });
   }
 
+  createReviewForBusiness(review, business) {
+    return this._createIfNotExists(business)
+      .then(business => {
+        return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/business/' + business.id + '/review', {
+          method: "POST",
+          body: JSON.stringify(review),
+          credentials: "include",
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          if(response.status === 401) {
+            return response;
+          }
+          return response.json()
+        });
+      })
+  }
+
 }

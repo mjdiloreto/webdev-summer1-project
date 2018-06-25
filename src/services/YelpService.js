@@ -1,4 +1,4 @@
-import { YELPERHELPER_NODE_ADDRESS } from "../environ/index";
+import {YELPERHELPER_NODE_ADDRESS, YELPERHELPER_SPRING_ADDRESS} from "../environ/index";
 let _singleton = Symbol();
 
 export default class YelpService {
