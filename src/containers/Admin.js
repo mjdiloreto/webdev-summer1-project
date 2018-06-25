@@ -16,12 +16,15 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+import ReviewService from "../services/ReviewService";
+import ReviewCard from "../components/ReviewCard";
 
 export default class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      users: [],
+      reviews: []
     };
   }
 
@@ -34,6 +37,7 @@ export default class Admin extends React.Component {
     });
 
     UserService.instance.findAllUsers().then(users => this.setState({users: users}));
+    ReviewService.instance.findAllReviews().then(reviews => this.setState({reviews: reviews}));
   }
 
   deleteUser(user) {
@@ -42,9 +46,16 @@ export default class Admin extends React.Component {
     });
   }
 
+  deleteReview(review) {
+    ReviewService.instance.deleteReview(review).then(() => {
+      this.setState({reviews: this.state.reviews.filter(u => u.id !== review.id)})
+    });
+  }
+
   render() {
     return (
       <div className="container-fluid">
+        <h1>Users</h1>
         <ul className="list-group">
           {this.state.users.map((user, index) =>
             <li key={index} className="list-group-item">
@@ -57,6 +68,21 @@ export default class Admin extends React.Component {
                     <i className="fa fa-times"/></button>
                 </div>
                </div>
+            </li>)}
+        </ul>
+        <h1>Reviews</h1>
+        <ul className="list-group">
+          {this.state.reviews.map((review, index) =>
+            <li key={index} className="list-group-item">
+              <div className="row">
+                <div className="col-sm">
+                  <ReviewCard review={review} business={true}/>
+                </div>
+                <div className="col-sm">
+                  <button className="btn btn-outline-danger float-right" onClick={() => this.deleteReview(review)}>
+                    <i className="fa fa-times"/></button>
+                </div>
+              </div>
             </li>)}
         </ul>
       </div>

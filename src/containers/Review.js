@@ -9,7 +9,7 @@ export default class Review extends React.Component {
     this.state = {
       businessId: this.props.match.params.businessId,
       business: {},
-      opinion: 0,
+      opinion: "Very positive",
       text: '',
       redirectToBusiness: false,
       redirectToLogin: false

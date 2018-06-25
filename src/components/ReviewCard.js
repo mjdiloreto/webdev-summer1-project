@@ -1,6 +1,7 @@
 import React from 'react';
 import BusinessService from "../services/BusinessService";
 import ReviewService from "../services/ReviewService";
+import {Redirect} from "react-router-dom";
 
 export default class ReviewCard extends React.Component {
 
@@ -8,7 +9,8 @@ export default class ReviewCard extends React.Component {
     super(props);
     this.state = {
       user: {username: ''},
-      business: {name: ''}
+      business: {name: ''},
+      redirectToBusiness: false
     }
   }
 
@@ -46,8 +48,12 @@ export default class ReviewCard extends React.Component {
   }
 
   render() {
+
+    if(this.state.redirectToBusiness) {
+      return <Redirect to={"/business/" + this.state.business.id}/>
+    }
+
     return (
-      <div className="col-md-4">
         <div className="card mb-4 box-shadow">
           <p className="card-img-top" style={{padding: 10}}>{this.props.review.text}</p>
           <div className="card-body">
@@ -62,11 +68,11 @@ export default class ReviewCard extends React.Component {
               {/*</div>*/}
               <small className="text-muted">{this.state.user.username}</small>
               <small className="text-muted">{this.ratingToOpinion(this.props.review.opinion)}</small>
-              {this.props.business && <small className="text-muted">{this.state.business.name}</small>}
+              {this.props.business && <btn className="btn text-muted"
+                onClick={() => this.setState({redirectToBusiness: true})}>{this.state.business.name}</btn>}
             </div>
           </div>
         </div>
-      </div>
     )
   }
 }

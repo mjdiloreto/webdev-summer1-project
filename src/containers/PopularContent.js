@@ -6,6 +6,7 @@ import Redirect from "react-router-dom/es/Redirect";
 import ReviewCard from "../components/ReviewCard";
 import PhotoCarousel from "../components/PhotoCarousel";
 import PhotoService from "../services/PhotoService";
+import ReviewService from "../services/ReviewService";
 
 export default class PopularContent extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class PopularContent extends React.Component {
 
   componentWillMount() {
     PhotoService.instance.findPopularPhotos().then(photos => this.setState({photos: photos}));
+    ReviewService.instance.findRecentReviews().then(reviews => this.setState({reviews: reviews}));
   }
 
   render() {
@@ -43,7 +45,10 @@ export default class PopularContent extends React.Component {
               <PhotoCarousel photos={this.state.photos}/>
             </div>
             <div className="col-6">
-              <h1>Popular Reviews</h1>
+              <h1>Recent Reviews</h1>
+              {this.state.reviews.map((review, index) => {
+                return <ReviewCard key={index} review={review} business={true}/>
+              })}
             </div>
           </div>
         </div>

@@ -76,7 +76,9 @@ export default class Business extends React.Component {
           </div>
           <div className="container row">
             {this.state.reviews.map((review, index) => (
-              <ReviewCard review={review} key={index}/>
+              <div className="col-md-4">
+                <ReviewCard review={review} key={index}/>
+              </div>
             ))}
           </div>
         </div>

@@ -91,7 +91,9 @@ export default class Profile extends React.Component {
           <div className="row">
             {this.state.reviews.map((review, index) => {
               return (
-                <ReviewCard key={index} review={review} business={true}/>
+                <div className="col-md-4">
+                  <ReviewCard key={index} review={review} business={true}/>
+                </div>
               )
             })}
           </div>
