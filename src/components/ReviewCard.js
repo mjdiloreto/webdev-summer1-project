@@ -7,16 +7,42 @@ export default class ReviewCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {username: ''}
+      user: {username: ''},
+      business: {name: ''}
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     ReviewService.instance.findUserOfReview(this.props.review).then(user => {
       if(user.username) {
         this.setState({user: user})
       }
-    })
+    }).then(() => {
+      if(this.props.business) {
+        ReviewService.instance.findBusinessOfReview(this.props.review).then(business => {
+          if(business.name) {
+            this.setState({business: business})
+          }
+        });
+      }
+    });
+  }
+
+  ratingToOpinion(opinion) {
+    switch(opinion) {
+      case "VERYHIGH":
+        return "Very positive";
+      case "HIGH":
+        return "Positive";
+      case "MEDIUM":
+        return "Neutral";
+      case "LOW":
+        return "Negative";
+      case "VERYLOW":
+        return "Very negative";
+      default:
+        return "MEDIUM"
+    }
   }
 
   render() {
@@ -35,7 +61,8 @@ export default class ReviewCard extends React.Component {
                   {/*<i className="fa fa-thumbs-down"/></button>*/}
               {/*</div>*/}
               <small className="text-muted">{this.state.user.username}</small>
-              {this.props.business && <small className="text-muted">{this.props.business.name}</small>}
+              <small className="text-muted">{this.ratingToOpinion(this.props.review.opinion)}</small>
+              {this.props.business && <small className="text-muted">{this.state.business.name}</small>}
             </div>
           </div>
         </div>

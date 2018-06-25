@@ -9,6 +9,7 @@ import Business from "./Business";
 import Admin from "./Admin";
 import Review from "./Review";
 import PopularContent from "./PopularContent";
+import Footer from "../components/Footer";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -44,6 +45,8 @@ export default class Home extends React.Component {
                  render={routeProps => <Review {...routeProps} currentUser={this.state.currentUser}/>}/>
           <Route path="/admin"
                  render={routeProps => <Admin {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
+
+          <Footer/>
         </div>
       </Router>
     );

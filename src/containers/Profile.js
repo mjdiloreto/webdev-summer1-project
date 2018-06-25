@@ -1,5 +1,6 @@
 import React from 'react';
 import UserService from "../services/UserService";
+import ReviewCard from "../components/ReviewCard";
 
 
 export default class Profile extends React.Component {
@@ -12,7 +13,8 @@ export default class Profile extends React.Component {
       firstName: '',
       lastName: '',
       phone: '',
-      email: ''
+      email: '',
+      reviews: []
     };
   }
 
@@ -25,7 +27,8 @@ export default class Profile extends React.Component {
           firstName: user.firstName,
           lastName: user.lastName,
           phone: user.phone,
-          email: user.email
+          email: user.email,
+          reviews: user.reviews || []
         });
 
         this.props.userChanged(user);
@@ -82,6 +85,17 @@ export default class Profile extends React.Component {
                placeholder={this.state.user.email}/>
 
         <button className="btn btn-primary btn-block" onClick={() => this.update()}>Update Information</button>
+
+        <div className="container-fluid">
+          <h1>Your Reviews</h1>
+          <div className="row">
+            {this.state.reviews.map((review, index) => {
+              return (
+                <ReviewCard key={index} review={review} business={true}/>
+              )
+            })}
+          </div>
+        </div>
       </div>
     );
   }

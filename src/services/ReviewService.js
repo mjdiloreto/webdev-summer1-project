@@ -19,4 +19,9 @@ export default class ReviewService {
     return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/review/' + review.id + '/user')
       .then(response => response.json());
   }
+
+  findBusinessOfReview(review) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/review/' + review.id + '/business')
+      .then(response => response.json());
+  }
 }
