@@ -1,8 +1,7 @@
 import React from 'react'
 import YelpService from "../services/YelpService";
-import {PhotoCard} from "../components/PhotoCard";
-import Photo from "../components/Photo";
 import BusinessService from "../services/BusinessService";
+import PhotoCard from "../components/PhotoCard";
 
 export default class Business extends React.Component {
   constructor(props) {
@@ -58,7 +57,8 @@ export default class Business extends React.Component {
 
             {this.state.business.photos.map((photo, index) =>
               <PhotoCard key={index} src={photo} price={this.state.business.price}
-                         alt={photo} businessId={this.state.businessId}/>)}
+                         alt={photo} businessId={this.state.businessId}
+                         currentUser={this.props.currentUser}/>)}
           </div>
         </div>
       </div>

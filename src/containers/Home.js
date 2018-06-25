@@ -34,7 +34,7 @@ export default class Home extends React.Component {
           <Route exact path="/profile"
                  component={Profile}/>
           <Route path="/business/:businessId"
-                 component={Business}/>
+                 render={routeProps => <Business {...routeProps} currentUser={this.state.currentUser}/>}/>
         </div>
       </Router>
     );

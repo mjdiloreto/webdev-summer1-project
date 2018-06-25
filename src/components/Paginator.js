@@ -40,7 +40,7 @@ export default class Paginator extends React.Component {
           {this.state.page_turners.map((page_turner, index) => {
             let active = this.state.active_page === index ? " active" : "";
             return (
-              <li className={"page-item" + active}>
+              <li key={index} className={"page-item" + active}>
                 <a className="page-link"
                    onClick={this.activateTurner(page_turner, index)}>{index + 1}</a>
               </li>

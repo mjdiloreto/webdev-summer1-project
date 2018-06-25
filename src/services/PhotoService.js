@@ -15,6 +15,11 @@ export default class PhotoService {
     return this[_singleton]
   }
 
+  findPhotoBySrc(src) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo?src=' + src)
+      .then(response => response.json())
+  }
+
   _createIfNotExists(src, businessId) {
     return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo?src=' + src)
       .then(response => response.json())
@@ -31,12 +36,11 @@ export default class PhotoService {
             }
           }).then(response => {
             if(response.status === 400) {
-              console.log("bad request in _createIfNotExists");
-              console.log("creating business " + businessId);
-              BusinessService.instance._createIfNotExists({id: businessId})
+              return BusinessService.instance._createIfNotExists({id: businessId})
                 .then(() => this._createIfNotExists(src, businessId));  // Try again. Should be no recursion.
+            } else {
+              return response.json();
             }
-            return response.json()
           });
         }
 
@@ -52,13 +56,30 @@ export default class PhotoService {
         return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo/' + photo.id + '/like', {
           method: "POST",
           credentials: "include"
+        })
+        .then(response => {
+          if(response.status === 401) {
+            return response;
+          }
+          return response.json()
         });
       });
   }
 
-
   dislikePhoto(src, businessId) {
-    console.log("disliking photo")
+    return this._createIfNotExists(src, businessId)
+      .then(photo => {
+        return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo/' + photo.id + '/dislike', {
+          method: "POST",
+          credentials: "include"
+        })
+        .then(response => {
+          if(response.status === 401) {
+            return response;
+          }
+          return response.json()
+        });
+      });
   }
 
 }
