@@ -48,7 +48,7 @@ export default class UserService {
     }).then(response => response.json());
   }
 
-  update(user) {
+  updateUser(user) {
     return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user/" + user.id, {
       method: "PUT",
       body: JSON.stringify(user),
