@@ -82,4 +82,9 @@ export default class PhotoService {
       });
   }
 
+  findPopularPhotos() {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/photo/popular")
+      .then(response => response.json());
+  }
+
 }

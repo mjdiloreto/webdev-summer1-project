@@ -8,6 +8,7 @@ import Profile from "./Profile";
 import Business from "./Business";
 import Admin from "./Admin";
 import Review from "./Review";
+import PopularContent from "./PopularContent";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -27,6 +28,8 @@ export default class Home extends React.Component {
         <div className="container-fluid">
           <TitleBar currentUser={this.state.currentUser}/>
 
+          <Route exact path="/"
+                 component={PopularContent}/>
           <Route exact path="/search"
                  component={PhotoContainer}/>
           <Route exact path="/login"
