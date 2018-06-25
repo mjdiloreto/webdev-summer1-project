@@ -32,7 +32,7 @@ export default class Home extends React.Component {
           <Route exact path="/register"
                  render={routeProps => <Register {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
           <Route exact path="/profile"
-                 component={Profile}/>
+                 render={routeProps => <Profile {...routeProps} userChanged={this.userChanged.bind(this)}/>}/>
           <Route path="/business/:businessId"
                  render={routeProps => <Business {...routeProps} currentUser={this.state.currentUser}/>}/>
         </div>

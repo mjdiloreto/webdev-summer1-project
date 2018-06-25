@@ -27,6 +27,8 @@ export default class Profile extends React.Component {
           phone: user.phone,
           email: user.email
         });
+
+        this.props.userChanged(user);
       }
     });
   }
