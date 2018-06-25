@@ -3,6 +3,7 @@ import YelpService from "../services/YelpService";
 import BusinessService from "../services/BusinessService";
 import PhotoCard from "../components/PhotoCard";
 import Redirect from "react-router-dom/es/Redirect";
+import ReviewCard from "../components/ReviewCard";
 
 export default class Business extends React.Component {
   constructor(props) {
@@ -11,12 +12,22 @@ export default class Business extends React.Component {
       businessId: this.props.match.params.businessId,
       business: {},
       redirectToReview: false,
+      reviews: []
     };
   }
 
   componentWillMount() {
     YelpService.instance.searchBusinessById(this.state.businessId)
       .then(business => this.setState({business: business}));
+
+    BusinessService.instance.findBusinessById(this.state.businessId)
+      .then(businesses => {
+        if(businesses.length !== 0) {
+          let business = businesses[0];
+          console.log(business.reviews)
+          this.setState({reviews: business.reviews})
+        }
+      });
   }
 
   like() {
@@ -49,26 +60,24 @@ export default class Business extends React.Component {
             <p className="lead text-muted">Price: {this.state.business.price}</p>
             <p className="lead text-muted">Yelp rating: {this.state.business.rating}</p>
             <p className="lead text-muted"><a href={this.state.business.url}>Visit their Yelp page</a></p>
-            {/*<Photo src={this.state.business.image_url} alt={this.state.business.image_url}/>*/}
             <p>
               <button className="btn btn-secondary my-2" onClick={() => this.redirectToReview()}>Write a review</button>
-              {/*<button onClick={() => this.like()} className="btn btn-outline-success my-2">*/}
-                {/*<i className="fa fa-thumbs-up"/>*/}
-              {/*</button>*/}
-              {/*<button onClick={() => this.dislike()} className="btn btn-outline-danger my-2">*/}
-                {/*<i className="fa fa-thumbs-down"/>*/}
-              {/*</button>*/}
             </p>
           </div>
         </section>
 
         <div className="album py-5 bg-light">
           <div className="container row">
-
             {this.state.business.photos.map((photo, index) =>
               <PhotoCard key={index} src={photo} price={this.state.business.price}
                          alt={photo} businessId={this.state.businessId}
+                         business={this.state.business}
                          currentUser={this.props.currentUser}/>)}
+          </div>
+          <div className="container row">
+            {this.state.reviews.map((review, index) => (
+              <ReviewCard review={review} key={index}/>
+            ))}
           </div>
         </div>
       </div>

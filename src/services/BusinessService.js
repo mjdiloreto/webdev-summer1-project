@@ -1,4 +1,5 @@
 import { YELPERHELPER_SPRING_ADDRESS } from "../environ/index";
+import YelpService from "./YelpService";
 let _singleton = Symbol();
 
 export default class BusinessService {
@@ -15,6 +16,10 @@ export default class BusinessService {
   }
 
   _createIfNotExists(business) {
+    if(business.photos) {
+      // Spring can't create photos from the urls.
+      delete business.photos;
+    }
     return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/business/' + business.id)
       .then(response => response.json())
       .then(businesses => {
@@ -32,6 +37,11 @@ export default class BusinessService {
           return businesses[0];
         }
       });
+  }
+
+  findBusinessById(businessId) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/business/' + businessId)
+      .then(response => response.json());
   }
 
   likeBusiness(business) {
@@ -84,6 +94,18 @@ export default class BusinessService {
           return response.json()
         });
       })
+  }
+
+  findInDBOrFromYelp(businessId) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/business/' + businessId)
+      .then(response => response.json())
+      .then(businesses => {
+        if(businesses.length === 0) {
+          return YelpService.instance.searchBusinessById(businessId)
+        } else {
+          return businesses[0];
+        }
+      });
   }
 
 }

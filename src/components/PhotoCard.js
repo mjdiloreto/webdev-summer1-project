@@ -26,7 +26,7 @@ export default class PhotoCard extends React.Component {
       return;
     }
 
-    PhotoService.instance.likePhoto(this.props.src, this.props.businessId)
+    PhotoService.instance.likePhoto(this.props.src, this.props.business)
       .then(photo => this.setState({photo: photo}))
   };
 
@@ -37,7 +37,7 @@ export default class PhotoCard extends React.Component {
       return;
     }
 
-    PhotoService.instance.dislikePhoto(this.props.src, this.props.businessId)
+    PhotoService.instance.dislikePhoto(this.props.src, this.props.business)
       .then(photo => this.setState({photo: photo}))
   };
 

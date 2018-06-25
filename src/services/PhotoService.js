@@ -20,14 +20,14 @@ export default class PhotoService {
       .then(response => response.json())
   }
 
-  _createIfNotExists(src, businessId) {
+  _createIfNotExists(src, business) {
     return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo?src=' + src)
       .then(response => response.json())
       .then(photos => {
         // There is no photo in my db. I have to let my server know about it
         if (photos.length === 0) {
 
-          return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/business/' + businessId + '/photo', {
+          return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/business/' + business.id + '/photo', {
             method: "POST",
             body: JSON.stringify({src: src}),
             credentials: "include",
@@ -36,8 +36,8 @@ export default class PhotoService {
             }
           }).then(response => {
             if(response.status === 400) {
-              return BusinessService.instance._createIfNotExists({id: businessId})
-                .then(() => this._createIfNotExists(src, businessId));  // Try again. Should be no recursion.
+              return BusinessService.instance._createIfNotExists(business)
+                .then(() => this._createIfNotExists(src, business));  // Try again. Should be no recursion.
             } else {
               return response.json();
             }
@@ -50,8 +50,8 @@ export default class PhotoService {
       });
   }
 
-  likePhoto(src, businessId) {
-    return this._createIfNotExists(src, businessId)
+  likePhoto(src, business) {
+    return this._createIfNotExists(src, business)
       .then(photo => {
         return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo/' + photo.id + '/like', {
           method: "POST",
@@ -66,8 +66,8 @@ export default class PhotoService {
       });
   }
 
-  dislikePhoto(src, businessId) {
-    return this._createIfNotExists(src, businessId)
+  dislikePhoto(src, business) {
+    return this._createIfNotExists(src, business)
       .then(photo => {
         return fetch(YELPERHELPER_SPRING_ADDRESS + '/api/photo/' + photo.id + '/dislike', {
           method: "POST",
