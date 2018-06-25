@@ -53,6 +53,11 @@ export default class TitleBar extends React.Component {
               <NavItem>
                 <NavLink href="/profile">Profile</NavLink>
               </NavItem>}
+
+              {this.props.currentUser.username === "admin" &&
+              <NavItem>
+                <NavLink href="/admin">Admin</NavLink>
+              </NavItem>}
             </Nav>
           </Collapse>
         </Navbar>

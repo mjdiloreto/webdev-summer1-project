@@ -34,12 +34,36 @@ export default class BusinessService {
       });
   }
 
-  likeBusiness(id) {
-    console.log("liking business")
+  likeBusiness(business) {
+    this._createIfNotExists(business)
+      .then(business => {
+        return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/business/" + business.id + '/like', {
+          method: "POST",
+          credentials: "include"
+        })
+        .then(response => {
+          if(response.status === 401) {
+            return response;
+          }
+          return response.json()
+        });
+      });
   }
 
-  dislikeBusiness(id) {
-    console.log("disliking business")
+  dislikeBusiness(business) {
+    this._createIfNotExists(business)
+      .then(business => {
+        return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/business/" + business.id + '/dislike', {
+          method: "POST",
+          credentials: "include"
+        })
+          .then(response => {
+            if(response.status === 401) {
+              return response;
+            }
+            return response.json()
+          });
+      });
   }
 
 }

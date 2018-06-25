@@ -14,6 +14,11 @@ export default class UserService {
     return this[_singleton]
   }
 
+  findAllUsers() {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user")
+      .then(response => response.json());
+  }
+
   register(user) {
     return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/register", {
       method: "POST",
@@ -57,6 +62,12 @@ export default class UserService {
   findUserByUsername(username) {
     return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user?username=" + username)
       .then(response => response.json())
+  }
+
+  deleteUser(user) {
+    return fetch(YELPERHELPER_SPRING_ADDRESS + "/api/user/" + user.id, {
+      method: "DELETE"
+    });
   }
 
 }

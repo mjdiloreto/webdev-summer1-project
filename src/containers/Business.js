@@ -18,11 +18,11 @@ export default class Business extends React.Component {
   }
 
   like() {
-    BusinessService.instance.likeBusiness(this.state.businessId)
+    BusinessService.instance.likeBusiness(this.state.business)
   }
 
   dislike() {
-    BusinessService.instance.dislikeBusiness(this.state.businessId)
+    BusinessService.instance.dislikeBusiness(this.state.business)
   }
 
   render() {
@@ -42,12 +42,12 @@ export default class Business extends React.Component {
             {/*<Photo src={this.state.business.image_url} alt={this.state.business.image_url}/>*/}
             <p>
               <button className="btn btn-secondary my-2">Write a review</button>
-              <button onClick={() => this.like()} className="btn btn-outline-success my-2">
-                <i className="fa fa-thumbs-up"/>
-              </button>
-              <button onClick={() => this.dislike()} className="btn btn-outline-danger my-2">
-                <i className="fa fa-thumbs-down"/>
-              </button>
+              {/*<button onClick={() => this.like()} className="btn btn-outline-success my-2">*/}
+                {/*<i className="fa fa-thumbs-up"/>*/}
+              {/*</button>*/}
+              {/*<button onClick={() => this.dislike()} className="btn btn-outline-danger my-2">*/}
+                {/*<i className="fa fa-thumbs-down"/>*/}
+              {/*</button>*/}
             </p>
           </div>
         </section>
